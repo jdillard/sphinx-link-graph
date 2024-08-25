@@ -1,0 +1,38 @@
+
+[build-system]
+requires = [
+    "setuptools",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sphinx-link-graph"
+description = "Link graph generator for Sphinx"
+authors = [
+    {name = "Jared Dillard", email = "jared.dillard@gmail.com"},
+]
+maintainers = [
+    {name = "Jared Dillard", email = "jared.dillard@gmail.com"},
+]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Documentation :: Sphinx",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Framework :: Sphinx :: Extension",
+]
+license = {text = "MIT"}
+readme = "README.rst"
+dynamic = [
+    "version",
+    "dependencies",
+    "optional-dependencies",
+]
+
+[tool.setuptools.dynamic]
+optional-dependencies = {dev = { file = ["requirements_dev.txt"] }}
+
+[tool.isort]
+profile = "black"
