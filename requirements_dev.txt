@@ -1,0 +1,6 @@
+tox
+build
+pre-commit
+flake8
+sphinx
+pytest
