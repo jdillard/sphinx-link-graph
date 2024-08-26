@@ -24,7 +24,7 @@ classifiers = [
     "Framework :: Sphinx :: Extension",
 ]
 license = {text = "MIT"}
-readme = "README.rst"
+readme = "README.md"
 dynamic = [
     "version",
     "dependencies",
