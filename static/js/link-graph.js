@@ -99,11 +99,12 @@ window.onload = function() {
         .attr("class", "texts")
         .selectAll("text")
         .data(nodes)
-        .enter().append("text")
-            .text(function (node) { return  node.label })
-            .attr("font-size", 15)
-            .attr("dx", 15)
-            .attr("dy", 4)
+        .enter().append("a")
+            .attr("xlink:href", function (node) { return  node.path }).append("text")
+                .text(function (node) { return  node.label })
+                .attr("font-size", 15)
+                .attr("dx", 15)
+                .attr("dy", 4)
 
     simulation.nodes(nodes).on('tick', () => {
         nodeElements
