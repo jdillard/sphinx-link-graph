@@ -1,6 +1,6 @@
-# Sphinx link graph
+# Sphinx link graph extension
 
-A link graph generator for Sphinx.
+A Sphinx extension to generate an interactive graph of internal links.
 
 ## Inspiration
 
