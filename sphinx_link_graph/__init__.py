@@ -8,6 +8,7 @@ import os
 from collections import Counter
 from pathlib import Path
 
+__version__ = "0.1.0"
 
 def setup(app):
     app.connect("doctree-resolved", get_links)
@@ -15,7 +16,7 @@ def setup(app):
     app.connect("build-finished", create_json)
 
     return {
-        "version": "0.1.0",
+        "version": __version__,
         "parallel_read_safe": False,
         "parallel_write_safe": True,
     }
