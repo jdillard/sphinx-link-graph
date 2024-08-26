@@ -35,37 +35,55 @@ def get_links(app, doctree, docname):
     references = []
 
     for node in doctree.traverse():
-        if node.tagname == 'reference':
-             if 'internal' in node.attributes and node.attributes['internal'] and 'refuri' in node.attributes and node.attributes['refuri']:
-                ref = node.attributes['refuri'].split("#")[0]
-                absolute_ref = os.path.normpath(os.path.join(os.path.dirname(f"/{docname}.html"), ref))
+        # add internal references
+        if node.tagname == 'reference' and 'internal' in node.attributes and node.attributes['internal'] and 'refuri' in node.attributes and node.attributes['refuri']:
+            ref = node.attributes['refuri'].split("#")[0]
+            absolute_ref = os.path.normpath(os.path.join(os.path.dirname(f"/{docname}.html"), ref))
 
-                references.append((f"/{docname}.html", absolute_ref))
+            references.append((f"/{docname}.html", absolute_ref))
 
-                if not f"/{docname}.html".split('/')[1] in app.env.app.groups:
-                    app.env.app.groups.append(f"/{docname}.html".split('/')[1])
+            if not f"/{docname}.html".split('/')[1] in app.env.app.groups:
+                app.env.app.groups.append(f"/{docname}.html".split('/')[1])
 
-                if not absolute_ref.split('/')[1] in app.env.app.groups:
-                    app.env.app.groups.append(absolute_ref.split('/')[1])
+            if not absolute_ref.split('/')[1] in app.env.app.groups:
+                app.env.app.groups.append(absolute_ref.split('/')[1])
 
-                if not f"/{docname}.html" in app.env.app.pages:
-                    app.env.app.pages.append(f"/{docname}.html")
+            if not f"/{docname}.html" in app.env.app.pages:
+                app.env.app.pages.append(f"/{docname}.html")
 
-                if not absolute_ref in app.env.app.pages:
-                    app.env.app.pages.append(absolute_ref)
+            if not absolute_ref in app.env.app.pages:
+                app.env.app.pages.append(absolute_ref)
 
-                if not any(d.get("id") == app.env.app.pages.index(f"/{docname}.html") for d in app.env.app.nodes):
-                    print(f"/{docname}.html",app.env.app.pages.index(f"/{docname}.html"))
-                    app.env.app.nodes.append({"id": app.env.app.pages.index(f"/{docname}.html"), "group": app.env.app.groups.index(f"/{docname}.html".split('/')[1]), "label": f"{docname.split('/')[-1]}.html", "level": 1})
+            #TODO add description for logic
+            if not any(d.get("id") == app.env.app.pages.index(f"/{docname}.html") for d in app.env.app.nodes):
+                # print("first", f"/{docname}.html",app.env.app.pages.index(f"/{docname}.html"))
+                app.env.app.nodes.append({
+                    "id": app.env.app.pages.index(f"/{docname}.html"),
+                    "group": app.env.app.groups.index(f"/{docname}.html".split('/')[1]),
+                    "label": app.env.titles.get(docname).astext(),
+                    "path": f"/{docname}.html",
+                    "level": 1
+                })
 
-                if not any(d.get("id") == app.env.app.pages.index(absolute_ref) for d in app.env.app.nodes):
-                    print(absolute_ref,app.env.app.pages.index(absolute_ref))
-                    app.env.app.nodes.append({"id": app.env.app.pages.index(absolute_ref), "group": app.env.app.groups.index(absolute_ref.split('/')[1]), "label": absolute_ref.split('/')[-1], "level": 1})
+            #TODO add description for logic
+            if not any(d.get("id") == app.env.app.pages.index(absolute_ref) for d in app.env.app.nodes):
+                # print("second", absolute_ref,app.env.app.pages.index(absolute_ref))
+                app.env.app.nodes.append({
+                    "id": app.env.app.pages.index(absolute_ref),
+                    "group": app.env.app.groups.index(absolute_ref.split('/')[1]),
+                    "label": app.env.titles.get(absolute_ref[1:-5]).astext(),
+                    "path": absolute_ref,
+                    "level": 1
+                })
 
+    #TODO add description for logic
     references_counts = Counter(references)
     for ref, count in references_counts.items():
-        #TODO calculate strength based on highest count
-        app.env.app.links.append({"target": app.env.app.pages.index(ref[1]), "source": app.env.app.pages.index(ref[0]), "strength": 1})
+        app.env.app.links.append({
+            "target": app.env.app.pages.index(ref[1]),
+            "source": app.env.app.pages.index(ref[0]),
+            "strength": 1 #TODO calculate strength based on highest count
+        })
 
 
 def create_json(app, exception):
