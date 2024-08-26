@@ -50,7 +50,7 @@ window.onload = function() {
     var simulation = d3
         .forceSimulation()
         .force('link', linkForce)
-        .force('charge', d3.forceManyBody().strength(-120))
+        .force('charge', d3.forceManyBody().strength(-500))
         .force('center', d3.forceCenter(width / 2, height / 2))
 
     var dragDrop = d3.drag().on('start', function (node) {
