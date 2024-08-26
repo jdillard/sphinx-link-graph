@@ -1,0 +1,8 @@
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+*.pyc
+
+# Environments
+.venv
