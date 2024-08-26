@@ -57,10 +57,14 @@ def get_links(app, doctree, docname):
             #TODO add description for logic
             if not any(d.get("id") == app.env.app.pages.index(f"/{docname}.html") for d in app.env.app.nodes):
                 # print("first", f"/{docname}.html",app.env.app.pages.index(f"/{docname}.html"))
+                if app.env.titles.get(docname):
+                    title = app.env.titles.get(docname).astext()
+                else:
+                    title = f"/{docname}.html"
                 app.env.app.nodes.append({
                     "id": app.env.app.pages.index(f"/{docname}.html"),
                     "group": app.env.app.groups.index(f"/{docname}.html".split('/')[1]),
-                    "label": app.env.titles.get(docname).astext(),
+                    "label": title,
                     "path": f"/{docname}.html",
                     "level": 1
                 })
@@ -68,10 +72,14 @@ def get_links(app, doctree, docname):
             #TODO add description for logic
             if not any(d.get("id") == app.env.app.pages.index(absolute_ref) for d in app.env.app.nodes):
                 # print("second", absolute_ref,app.env.app.pages.index(absolute_ref))
+                if app.env.titles.get(absolute_ref):
+                    title = app.env.titles.get(absolute_ref).astext()
+                else:
+                    title = absolute_ref
                 app.env.app.nodes.append({
                     "id": app.env.app.pages.index(absolute_ref),
                     "group": app.env.app.groups.index(absolute_ref.split('/')[1]),
-                    "label": app.env.titles.get(absolute_ref[1:-5]).astext(),
+                    "label": title,
                     "path": absolute_ref,
                     "level": 1
                 })
