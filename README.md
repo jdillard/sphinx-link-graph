@@ -1,6 +1,6 @@
 # Sphinx visualization extension
 
-A Sphinx extension to generate interactive visualizations, including:
+A Sphinx extension to generate interactive visualizations.
 
 [![PyPI version](https://img.shields.io/pypi/v/sphinx-visualised.svg)](https://pypi.python.org/pypi/sphinx-visualised)
 ![Parallel safe](https://img.shields.io/badge/parallel%20safe-false-red)
