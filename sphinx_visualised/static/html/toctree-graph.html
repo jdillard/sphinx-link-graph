@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Sphinx Toctree Graph</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="toctree.json"></script>
+    <script src="toctree-graph.js"></script>
+    <style>
+      .node circle {
+        fill: #999;
+        stroke: steelblue;
+        stroke-width: 3px;
+      }
+
+      .node text {
+        font: 12px sans-serif;
+      }
+
+      .link {
+        fill: none;
+        stroke: #555;
+        stroke-width: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Sphinx Toctree Graph</h1>
+    <p style="text-align: center;"><a href="/">back home</a> | <a href="link-graph.html">Sphinx Link Graph</a></p>
+    <svg width="960" height="600"></svg>
+  </body>
+</html>
+

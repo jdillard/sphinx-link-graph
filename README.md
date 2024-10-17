@@ -1,8 +1,8 @@
-# Sphinx link graph extension
+# Sphinx visualization extension
 
-A Sphinx extension to generate an interactive graph of internal links.
+A Sphinx extension to generate interactive visualizations, including:
 
-[![PyPI version](https://img.shields.io/pypi/v/sphinx-link-graph.svg)](https://pypi.python.org/pypi/sphinx-link-graph)
+[![PyPI version](https://img.shields.io/pypi/v/sphinx-visualised.svg)](https://pypi.python.org/pypi/sphinx-visualised)
 ![Parallel safe](https://img.shields.io/badge/parallel%20safe-false-red)
 
 ## Installing
@@ -10,19 +10,22 @@ A Sphinx extension to generate an interactive graph of internal links.
 Directly install via pip by using:
 
 ```
-pip install sphinx-link-graph
+pip install sphinx-visualised
 ```
 
-Add `sphinx_link_graph` to the [extensions](https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-extensions) array in your Sphinx **conf.py**.
+Add `sphinx_visualised` to the [extensions](https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-extensions) array in your Sphinx **conf.py**.
 For example:
 
 ```python
-extensions = ['sphinx_link_graph']
+extensions = ['sphinx_visualised']
 ```
 
 ## Usage
 
-After building the docs, open `/_static/link-graph.html` in the browser.
+After building the docs, open one of the following in the browser:
+
+- `/_static/link-graph.html` 
+- `/_static/toctree-graph.html` 
 
 ## Inspiration
 
