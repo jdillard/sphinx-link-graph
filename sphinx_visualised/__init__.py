@@ -8,7 +8,7 @@ import os
 from collections import Counter
 from pathlib import Path
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 def setup(app):
     app.connect("doctree-resolved", get_links)
