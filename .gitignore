@@ -6,3 +6,4 @@ build/
 
 # Environments
 .venv
+docs/_build
