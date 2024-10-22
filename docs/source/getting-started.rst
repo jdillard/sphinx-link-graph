@@ -6,16 +6,16 @@ Installing
 
 Directly install via pip by using:
 
-```
-pip install sphinx-visualised
-```
+.. code-block::
+
+   pip install sphinx-visualised
 
 Add ``sphinx_visualised`` to the `extensions <https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-extensions>`_ array in your Sphinx **conf.py**.
 For example:
 
-```python
-extensions = ['sphinx_visualised']
-```
+.. code-block:: python
+
+   extensions = ['sphinx_visualised']
 
 Usage
 -----

@@ -1,9 +1,7 @@
-sphinx-sitemap
-==============
+Sphinx visualization extension
+==============================
 
-A `Sphinx`_ extension to generate multi-version and multi-language
-`sitemaps.org`_ compliant sitemaps for the HTML version of your Sphinx
-documentation.
+A `Sphinx`_ extension to generate interactive visualizations.
 
 |PyPI version| |Parallel Safe| |GitHub Stars|
 
