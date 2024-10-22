@@ -125,15 +125,15 @@ def build_toctree_hierarchy(app):
 
 
 def create_json(app, exception):
-    filename = Path(app.outdir) / "_static" / "links.json"
+    filename = Path(app.outdir) / "_static" / "links.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var links = {json.dumps(app.env.app.links, indent=4)};')
 
-    filename = Path(app.outdir) / "_static" / "nodes.json"
+    filename = Path(app.outdir) / "_static" / "nodes.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var nodes = {json.dumps(app.env.app.nodes, indent=4)};')
 
-    filename = Path(app.outdir) / "_static" / "toctree.json"
+    filename = Path(app.outdir) / "_static" / "toctree.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var toctree = {json.dumps(build_toctree_hierarchy(app), indent=4)};')
 
