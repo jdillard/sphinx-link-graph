@@ -1,7 +1,7 @@
 Example Site
 ============
 
-This page has a link to :doc:`lorem`.
+This demonstrates the `link-graph.html`_ and `toctree-graph.html`_ pages.
 
 .. toctree::
 
@@ -10,3 +10,6 @@ This page has a link to :doc:`lorem`.
    dolor/index
    sit
    amet
+
+.. _link-graph.html: /en/latest/_static/link-graph.html
+.. _toctree-graph.html: /en/latest/_static/toctree-graph.html
