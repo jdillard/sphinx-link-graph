@@ -41,6 +41,7 @@ extensions = [
     "sphinx_contributors",
     "sphinx.ext.intersphinx",
     "sphinxext.opengraph",
+    "sphinx_visualised",
 ]
 
 # Add any paths that contain templates here, relative to this directory.

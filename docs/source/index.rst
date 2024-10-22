@@ -10,6 +10,7 @@ A `Sphinx`_ extension to generate interactive visualizations.
 
    getting-started
    changelog
+   example/index
 
 
 .. _Sphinx: http://sphinx-doc.org/
