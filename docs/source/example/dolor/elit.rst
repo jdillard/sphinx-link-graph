@@ -1,4 +1,4 @@
 Elit
 ====
 
-This page has a link to :docs:`lorem`.
+This page has a link to :doc:`lorem`.
