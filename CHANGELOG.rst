@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2.2
+-----
+
+- Change json to js for data files
+
 0.2.1
 -----
 
