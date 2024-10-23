@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2.3
+-----
+
+- Fix absolute_ref syntax so page titles are looked up correctly
+
 0.2.2
 -----
 
