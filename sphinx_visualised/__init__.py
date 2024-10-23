@@ -10,9 +10,10 @@ from pathlib import Path
 
 __version__ = "0.2.2"
 
+
 def setup(app):
-    app.connect("doctree-resolved", get_links)
     app.connect("builder-inited", create_objects)
+    app.connect("doctree-resolved", get_links)
     app.connect("build-finished", create_json)
 
     return {
@@ -23,75 +24,88 @@ def setup(app):
 
 
 def create_objects(app):
+    """
+    Create objects when builder is initiated
+    """
     builder = getattr(app, "builder", None)
     if builder is None:
         return
-    builder.env.app.nodes = []
-    builder.env.app.links = []
-    builder.env.app.pages = []
-    builder.env.app.groups = []
+    builder.env.app.nodes = [] # a list of nodes and their metadata
+    builder.env.app.links = [] # a list of links between pages
+    builder.env.app.pages = [] # an index of page names
+    builder.env.app.groups = [] # an index of page groups
 
 
 def get_links(app, doctree, docname):
-    references = []
+    """
+    Gather internal link connections
+    """
+    references = [] # a list of every internal reference made between pages
 
     for node in doctree.traverse():
         # add internal references
         if node.tagname == 'reference' and 'internal' in node.attributes and node.attributes['internal'] and 'refuri' in node.attributes and node.attributes['refuri']:
             ref = node.attributes['refuri'].split("#")[0]
-            absolute_ref = os.path.normpath(os.path.join(os.path.dirname(f"/{docname}.html"), ref))
+            # path of the referenced page
+            absolute_ref = os.path.abspath(os.path.join(os.path.dirname(f"/{docname}.html"), ref))[1:-5]
 
-            references.append((f"/{docname}.html", absolute_ref))
+            # add each link as an individual reference
+            references.append((f"/{docname}.html", f"/{absolute_ref}.html"))
 
-            if not f"/{docname}.html".split('/')[1] in app.env.app.groups:
-                app.env.app.groups.append(f"/{docname}.html".split('/')[1])
+            # a group is the name of the top level directory
+            docname_group = f"/{docname}.html".split('/')[1]
+            if not docname_group in app.env.app.groups:
+                app.env.app.groups.append(docname_group)
 
-            if not absolute_ref.split('/')[1] in app.env.app.groups:
-                app.env.app.groups.append(absolute_ref.split('/')[1])
+            absolute_ref_group = f"/{absolute_ref}.html".split('/')[1]
+            if not absolute_ref_group in app.env.app.groups:
+                app.env.app.groups.append(absolute_ref_group)
 
+            # add to index of page names
             if not f"/{docname}.html" in app.env.app.pages:
                 app.env.app.pages.append(f"/{docname}.html")
 
-            if not absolute_ref in app.env.app.pages:
-                app.env.app.pages.append(absolute_ref)
+            if not f"/{absolute_ref}.html" in app.env.app.pages:
+                app.env.app.pages.append(f"/{absolute_ref}.html")
 
-            #TODO add description for logic
+            # check if node exists based on docname's id
             if not any(d.get("id") == app.env.app.pages.index(f"/{docname}.html") for d in app.env.app.nodes):
-                # print("first", f"/{docname}.html",app.env.app.pages.index(f"/{docname}.html"))
                 if app.env.titles.get(docname):
                     title = app.env.titles.get(docname).astext()
                 else:
                     title = f"/{docname}.html"
+
                 app.env.app.nodes.append({
                     "id": app.env.app.pages.index(f"/{docname}.html"),
-                    "group": app.env.app.groups.index(f"/{docname}.html".split('/')[1]),
+                    "group": app.env.app.groups.index(docname_group),
                     "label": title,
                     "path": f"../{docname}.html",
                     "level": 1
                 })
 
-            #TODO add description for logic
-            if not any(d.get("id") == app.env.app.pages.index(absolute_ref) for d in app.env.app.nodes):
-                # print("second", absolute_ref,app.env.app.pages.index(absolute_ref))
+            # check if node exists based on absolute_ref's id
+            if not any(d.get("id") == app.env.app.pages.index(f"/{absolute_ref}.html") for d in app.env.app.nodes):
                 if app.env.titles.get(absolute_ref):
                     title = app.env.titles.get(absolute_ref).astext()
                 else:
-                    title = absolute_ref
+                    title = f"/{absolute_ref}.html"
+
                 app.env.app.nodes.append({
-                    "id": app.env.app.pages.index(absolute_ref),
-                    "group": app.env.app.groups.index(absolute_ref.split('/')[1]),
+                    "id": app.env.app.pages.index(f"/{absolute_ref}.html"),
+                    "group": app.env.app.groups.index(absolute_ref_group),
                     "label": title,
-                    "path": f"../{absolute_ref}",
+                    "path": f"../{absolute_ref}.html",
                     "level": 1
                 })
 
-    #TODO add description for logic
+    # create object that links references between pages
     references_counts = Counter(references)
     for ref, count in references_counts.items():
+        #TODO check if unique else strength++
         app.env.app.links.append({
             "target": app.env.app.pages.index(ref[1]),
             "source": app.env.app.pages.index(ref[0]),
-            "strength": 1 #TODO calculate strength based on highest count
+            "strength": 1,
         })
 
 
@@ -125,6 +139,9 @@ def build_toctree_hierarchy(app):
 
 
 def create_json(app, exception):
+    """
+    Create static files for visualizations
+    """
     filename = Path(app.outdir) / "_static" / "links.js"
     with open(filename, "w") as json_file:
         json_file.write(f'var links = {json.dumps(app.env.app.links, indent=4)};')
